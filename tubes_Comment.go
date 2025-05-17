@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-const NMAX int = 10
+const NMAX int = 100
 
 type comment struct {
 	longcomment    int
