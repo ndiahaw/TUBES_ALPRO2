@@ -11,16 +11,21 @@ type comment struct {
 type tabComment [NMAX]comment
 
 var tab tabComment
-var nData int
+var nData int = 0
+
 var kataKunci string
 
 // prosedur ini tu buat input/tambahin komentar
 func inputComment(A *tabComment, nData *int) {
-	var i int
-	for i <= NMAX && A[i].text != "0" {
-		fmt.Scan(&A[i].text)
+	var i int = 0
+	var text string
+	fmt.Scan(&text)
+	for text != "0" && i < NMAX {
+		A[i].text = text
 		A[i].longcomment = len(A[i].text)
+		fmt.Scan(&text)
 		*nData++
+		i++
 	}
 }
 
@@ -34,33 +39,66 @@ func hapusKomentar() {
 
 }
 
-// prosedur ini tu buat output
-func analisisSentimen(A tabComment, n int) {
-
+// prosedur ini tu buat analisis sentimennya berdasarkan kata kunci positif & negatif yang udah di deklarasi di array sebelumnya
+func analisisSentimen(A *tabComment, nData int) {
+	var i, j int
+	var isPositif, isNegatif bool
+	isPositif = false
+	isNegatif = false
+	for i < nData {
+		for j = 0; j < len(kataPositif); j++ {
+			if isNegatif && cariKataKunci(*A, nData, kataPositif[j]) != -1 {
+				isPositif = true
+				A[i].sentimen = "Positif"
+			}
+			if isPositif && cariKataKunci(*A, nData, kataNegatif[j]) != -1 {
+				isNegatif = true
+				A[i].sentimen = "Negatif"
+			} else {
+				A[i].sentimen = "Netral"
+			}
+		}
+		i++
+	}
+	outputComment(tab, nData)
 }
 
 // fungsi ini tu buat fitur nyari kata kunci
 func cariKataKunci(A *tabComment, nData int, kataKunci string) int {
-	var i, j, k, found, longKey int
+	var i, j, found int
 	var subString string
 	found = -1
-	longKey = len(kataKunci)
+
+	subString = ""
 
 	for i = 0; i < nData; i++ {
-		if A[i].text != "0" && found == -1 {
-			for j = 0; j <= A[i].longcomment; j++ {
-				subString = ""
-				for k = j; k <= longKey; k++ {
-					subString += string(A[i].text[k])
-				}
-				fmt.Println(subString)
-				if subString == kataKunci {
-					found = i
-					return found
+		if A[i].text != "0" {
+			subString = ""
+			for j = 0; j < A[i].longcomment; j++ {
+				if A[i].text[j] != '_' && j != A[i].longcomment-1 {
+					subString += string(A[i].text[j])
+					if subString == kataKunci {
+						found = i
+						fmt.Print(found)
+						return found
+					}
+				} else if A[i].text[j] != '_' && j == A[i].longcomment-1 {
+					subString += string(A[i].text[j])
+					if subString == kataKunci {
+						found = i
+						fmt.Print(found)
+						return found
+					}
+					subString = ""
+				} else {
+					if subString == kataKunci {
+						found = i
+						fmt.Print(found)
+						return found
+					}
+					subString = ""
 				}
 			}
-		} else if found != -1 {
-			fmt.Print(i)
 		}
 	}
 	return found
@@ -93,7 +131,7 @@ func urutkanSentimenKomentar(A *tabComment, nData int) {
 
 }
 
-//fungsi ini buat tampilan aplikasinya
+// fungsi ini buat tampilan aplikasinya
 func tampilanInput() {
 
 	pilihanTampilanInput()
