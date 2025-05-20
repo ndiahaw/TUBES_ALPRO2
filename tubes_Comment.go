@@ -5,15 +5,16 @@ import "fmt"
 const NMAX int = 100
 
 type comment struct {
-	longcomment    int
-	text, sentimen string
+	longcomment, nilaiSentimen int
+	text, sentimen             string
 }
 type tabComment [NMAX]comment
 
 var kataPositif = []string{"bagus", "indah", "cantik", "ganteng"}
 var kataNegatif = []string{"jelek", "buruk", "menyebalkan", "benci"}
 var tab tabComment
-var nData int = 0
+var IDKomen int
+var nData int = 1
 var kataKunci string
 
 // prosedur ini tu buat input/tambahin komentar
@@ -55,9 +56,9 @@ func outputComment(A tabComment, nData int) {
 	fmt.Println("---------------------------------------------------")
 	for i = 0; i < nData; i++ {
 		if A[i].sentimen == "" {
-			fmt.Printf("| %d.  | %-19s | %-19s |\n", i+1, A[i].text, "Belum Tersedia")
+			fmt.Printf("| %d.  | %-19s | %-19s |\n", i, A[i].text, "Belum Tersedia")
 		} else {
-			fmt.Printf("| %d.  | %-19s | %-19s |\n", i+1, A[i].text, A[i].sentimen)
+			fmt.Printf("| %d.  | %-19s | %-19s |\n", i, A[i].text, A[i].sentimen)
 		}
 	}
 	fmt.Println("---------------------------------------------------")
@@ -104,9 +105,31 @@ func ubahKomentar(A *tabComment, nData int) {
 }
 
 // fungsi ini buat hapus komentar
-func hapusKomentar() {
+func hapusKomentar(A tabComment, nData int) {
+	var IDKomen int
 
-	fmt.Println("Silahkan isi Index dari komentar yang ingin dihapus :")
+	outputComment(A, nData)
+
+	// tampilan
+	fmt.Println("PETUNJUK:")
+	fmt.Println("Mohon masukkan ID komentar")
+	fmt.Println("ID komentar merupakan No komentar pada daftar komentar")
+	fmt.Println("-------------------------------------------------------")
+	fmt.Println("0. Back")
+	fmt.Println("-------------------------------------------------------")
+	fmt.Println("ID komentar :")
+	fmt.Scan(&IDKomen)
+	if IDKomen <= 0 || IDKomen >= nData {
+		fmt.Println("Komentar tidak ditemukan")
+	} else {
+		for IDKomen <= nData-2 {
+			A[IDKomen] = A[IDKomen+1]
+			IDKomen++
+		}
+		nData--
+		fmt.Println("Komentar telah dihapus")
+		outputComment(A, nData)
+	}
 
 }
 
@@ -128,10 +151,13 @@ func analisisSentimen(A *tabComment, nData int) {
 		}
 		if x == true {
 			A[i].sentimen = "Positif"
+			A[i].nilaiSentimen = 2
 		} else if y == true {
 			A[i].sentimen = "Negatif"
+			A[i].nilaiSentimen = 0
 		} else {
 			A[i].sentimen = "Netral"
+			A[i].nilaiSentimen = 1
 		}
 		i++
 	}
@@ -144,16 +170,22 @@ func analisisSentimen(A *tabComment, nData int) {
 func menuCariKataKunci(A tabComment, nData int) {
 	var kataKunci string
 	var i int
+	var found bool
+	outputComment(A, nData)
+	// tampilan
+	fmt.Println("Masukkan kata kunci : ")
 	fmt.Scan(&kataKunci)
 	for i = 0; i < nData; i++ {
 		if cariKataKunci(A[i], kataKunci) == true {
+			fmt.Println("Komentar berada di No :", i)
 			fmt.Println(A[i].text)
+			found = true
 		}
 	}
-	if cariKataKunci(A[i], kataKunci) == true {
+	if !found {
 		fmt.Println("Komentar tidak ditemukan")
 	}
-
+	outputComment(A, nData)
 }
 
 // fungsi ini tu buat fitur nyari kata kunci
@@ -185,7 +217,7 @@ func cariKataKunci(A comment, kataKunci string) bool {
 func urutkanPanjangKomentar(A *tabComment, nData int) {
 	var i, idx, pass int
 	var temp comment
-	pass = 1
+	pass = 2
 	for pass < nData {
 		idx = pass - 1
 		i = pass
@@ -205,7 +237,27 @@ func urutkanPanjangKomentar(A *tabComment, nData int) {
 
 // fungsi ini buat ngurutin berdasarkan sentimen komentarnya menggunakan insertion sort
 func urutkanSentimenKomentar(A *tabComment, nData int) {
+	var pass, i int
+	var temp comment
+	pass = 2
 
+	analisisSentimen(*&A, nData)
+
+	fmt.Println("Komentar sebelum diurutkan :")
+	outputComment(*A, nData)
+
+	for pass <= nData {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp.nilaiSentimen > A[i-1].nilaiSentimen {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+	}
+	fmt.Println("Komentar setelah diurutkan :")
+	outputComment(*A, nData)
 }
 
 func urutkanKomentar(A *tabComment, nData int) {
@@ -215,16 +267,14 @@ func urutkanKomentar(A *tabComment, nData int) {
 	fmt.Println("")
 	fmt.Println("1. Berdasarkan Panjang Komentar")
 	fmt.Println("2. Berdasarkan Sentimen Komentar")
+	fmt.Println("")
+	fmt.Println("Silahkan Pilih Tipe Pengurutan : ")
+	fmt.Scan(&pilihan)
 	if pilihan == 1 {
 		urutkanPanjangKomentar(&tab, nData)
 	} else if pilihan == 2 {
 		urutkanSentimenKomentar(&tab, nData)
-	} else {
-
 	}
-	fmt.Println("")
-	fmt.Println("Silahkan Pilih Tipe Pengurutan : ")
-	fmt.Scan(&pilihan)
 }
 
 func statistikSentimen(A *tabComment, nData int) {
@@ -272,7 +322,7 @@ func tampilanMenu(pilihan int) {
 		case 2:
 			ubahKomentar(&tab, nData)
 		case 3:
-			hapusKomentar()
+			hapusKomentar(tab, nData)
 		case 4:
 			analisisSentimen(&tab, nData)
 		case 5:
