@@ -90,13 +90,13 @@ func ubahKomentar(A *tabComment, nData int) {
 	} else if idx == 0 {
 		fmt.Println()
 	} else {
-		fmt.Println("Komentar lama :", (*A)[idx-1].text)
+		fmt.Println("Komentar lama :", (*A)[idx].text)
 		fmt.Println()
 		fmt.Println("Masukkan Komentar :")
 		fmt.Scanln(&komentarBaru)
-		(*A)[idx-1].text = komentarBaru
-		(*A)[idx-1].longcomment = len(komentarBaru)
-		(*A)[idx-1].sentimen = ""
+		(*A)[idx].text = komentarBaru
+		(*A)[idx].longcomment = len(komentarBaru)
+		(*A)[idx].sentimen = ""
 		fmt.Println()
 		fmt.Println("Komentar berhasil diubah.")
 	}
