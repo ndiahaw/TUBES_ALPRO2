@@ -24,6 +24,7 @@ func inputComment(A *tabComment, nData *int) {
 	fmt.Println("========================================================")
 	fmt.Println("||		    TAMBAH KOMENTAR                   ||")
 	fmt.Println("========================================================")
+	fmt.Println("PETUNJUK:")
 	fmt.Println("Untuk spasi saat penulisan komentar, gunakan tanda '_' |")
 	fmt.Println("Jika ingin berhenti, Silahkan isi 0 di akhir           |")
 	fmt.Println("--------------------------------------------------------")
@@ -73,9 +74,9 @@ func ubahKomentar(A *tabComment, nData int) {
 	fmt.Println("=======================================================")
 	fmt.Println("||		    UBAH KOMENTAR                    ||")
 	fmt.Println("=======================================================")
-	fmt.Println("Index komentar yang telah terisi :(", nData-1, "komentar)       |")
+	fmt.Println("Index komentar yang telah terisi :(", nData-1, "komentar)      |")
 	fmt.Println("-------------------------------------------------------")
-	fmt.Println("| 0. Back                                             |")
+	fmt.Println("0. Back                                               |")
 	fmt.Println("=======================================================")
 	fmt.Println()
 	fmt.Println("Silakan masukkan index komentar yang ingin diubah :   ")
@@ -109,12 +110,15 @@ func hapusKomentar(A tabComment, nData int) {
 	outputComment(A, nData)
 
 	// tampilan
-	fmt.Println("PETUNJUK:")
-	fmt.Println("Mohon masukkan ID komentar")
-	fmt.Println("ID komentar merupakan No komentar pada daftar komentar")
-	fmt.Println("-------------------------------------------------------")
-	fmt.Println("0. Back")
-	fmt.Println("-------------------------------------------------------")
+	fmt.Println("==========================================================")
+	fmt.Println("||		       HAPUS KOMENTAR                   ||")
+	fmt.Println("==========================================================")
+	fmt.Println("PETUNJUK :                                               |")
+	fmt.Println("Mohon masukkan Index komentar yang ingin di hapus!       |")
+	fmt.Println("Index komentar merupakan No. urutan pada daftar komentar |")
+	fmt.Println("----------------------------------------------------------")
+	fmt.Println("0. Back                                                  |")
+	fmt.Println("==========================================================")
 	fmt.Println("ID komentar :")
 	fmt.Scan(&IDKomen)
 	if IDKomen <= 0 || IDKomen >= nData {
@@ -125,17 +129,20 @@ func hapusKomentar(A tabComment, nData int) {
 			IDKomen++
 		}
 		nData--
-		fmt.Println("Komentar telah dihapus")
+		fmt.Println()
+		fmt.Println("Komentar anda telah dihapus!")
 		outputComment(A, nData)
 	}
 
 }
 
+// codenya masih rusakkkk
 // prosedur ini tu buat output
 func analisisSentimen(A *tabComment, nData int) {
 	var i, j int
 	var x, y bool
 	i = 0
+	outputComment(*A, nData)
 	for i < nData {
 		x = false
 		y = false
@@ -265,9 +272,7 @@ func urutkanSentimenKomentar(A *tabComment, nData int) {
 	var pass, i int
 	var temp comment
 	pass = 2
-
 	analisisSentimen(*&A, nData)
-
 	fmt.Println("Komentar Sentimen sebelum diurutkan :")
 	outputComment(*A, nData)
 
