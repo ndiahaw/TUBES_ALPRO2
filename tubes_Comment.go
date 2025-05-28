@@ -10,8 +10,16 @@ type comment struct {
 }
 type tabComment [NMAX]comment
 
-var komentarPositif = []string{"bagus", "indah", "cantik", "ganteng", "modern", "keren", "anjay", "wow", "ramah", "enak", "elegan"}
-var komentarNegatif = []string{"jelek", "buruk", "menyebalkan", "benci", "burik", "gajelas", "anjir", "gila", "kurang", "najis", "murahan"}
+var komentarPositif = []string{"bagus", "indah", "cantik", "ganteng", "modern", "keren", "anjay", "wow", "ramah",
+	"enak", "elegan", "hebat", "luar_biasa", "bagus_banget", "kreatif", "cerdas", "mantap", "asyik", "nyaman",
+	"terbaik", "cepat", "halus", "jernih", "top", "bersih", "segar", "inspiratif", "luwes", "menarik", "rekomended",
+	"cerah", "positif", "aman", "tenang", "wangi", "modis", "menawan", "rapi", "teratur", "efisien", "hemat",
+	"berbakat", "jujur", "adil", "ceria", "mewah", "seru", "unik", "luar_biasa", "wah"}
+var komentarNegatif = []string{"bagus", "indah", "cantik", "ganteng", "modern", "keren", "anjay", "wow", "ramah",
+	"enak", "elegan", "hebat", "luar_biasa", "elegan", "hebat", "luar_biasa", "bagus_banget", "kreatif", "cerdas",
+	"mantap", "asyik", "nyaman", "terbaik", "cepat", "halus", "jernih", "top", "bersih", "segar", "inspiratif",
+	"luwes", "menarik", "rekomended", "cerah", "positif", "aman", "tenang", "wangi", "modis", "menawan", "rapi",
+	"teratur", "efisien", "hemat", "berbakat", "jujur", "adil", "ceria", "mewah", "seru", "unik", "luar_biasa", "wah"}
 var tab tabComment
 var IDKomen int
 var nData int = 1
@@ -117,7 +125,7 @@ func hapusKomentar(A *tabComment, nData *int) {
 
 	outputComment(*A, *nData)
 
-	// tampilan
+	// tampilan hapus komentar
 	fmt.Println()
 	fmt.Println("Memuat Hasil..... > ")
 	fmt.Println()
@@ -147,7 +155,6 @@ func hapusKomentar(A *tabComment, nData *int) {
 
 }
 
-// codenya masih rusakkkk
 // prosedur ini tu buat output
 func analisisSentimen(A *tabComment, nData int) {
 	var i, j int
@@ -326,7 +333,7 @@ func urutkanPanjangKomentar(A *tabComment, nData, pilihan int) {
 			A[idx] = temp
 			pass++
 		}
-		fmt.Println("Komentar Desscending setelah diurutkan : ")
+		fmt.Println("Komentar Descending setelah diurutkan : ")
 	}
 }
 
@@ -361,7 +368,6 @@ func urutkanSentimenKomentar(A *tabComment, nData int) {
 }
 
 func urutkanKomentar(A *tabComment, nData int) {
-	// buat array comment
 	var pilihan int
 	urutkanPanjangKomentar(&tab, nData, pilihan)
 	fmt.Println()
@@ -372,6 +378,8 @@ func urutkanKomentar(A *tabComment, nData int) {
 	fmt.Println("====================================================")
 	fmt.Println("1. Berdasarkan Panjang Komentar                    |")
 	fmt.Println("2. Berdasarkan Sentimen Komentar                   |")
+	fmt.Println("----------------------------------------------------")
+	fmt.Println("0. Keluar                                          |")
 	fmt.Println("====================================================")
 	fmt.Println()
 	fmt.Println("Silahkan Pilih Tipe Pengurutan : ")
@@ -383,8 +391,10 @@ func urutkanKomentar(A *tabComment, nData int) {
 		fmt.Println("====================================================")
 		fmt.Println("||            URUTKAN PANJANG KOMENTAR            ||")
 		fmt.Println("====================================================")
-		fmt.Println("1. Berdasarkan Panjang Komentar                    |")
-		fmt.Println("2. Berdasarkan Sentimen Komentar                   |")
+		fmt.Println("1. Berdasarkan Ascending                           |")
+		fmt.Println("2. Berdasarkan Descending                          |")
+		fmt.Println("----------------------------------------------------")
+		fmt.Println("0. Keluar                                          |")
 		fmt.Println("====================================================")
 		fmt.Println()
 		fmt.Print("Pilih urutan: ")
@@ -397,6 +407,8 @@ func urutkanKomentar(A *tabComment, nData int) {
 	outputComment(*A, nData)
 }
 
+// function ini berfungsi untuk menampilkan statistik dari sentimen, kemudian menammpilkan hasilnya
+// dengan sudah mengurutkan komentar berdasarkan sentimen
 func statistikSentimen(A *tabComment, nData int) {
 	var positif, negatif, netral, i int
 	for i = 1; i < nData; i++ {
@@ -408,6 +420,7 @@ func statistikSentimen(A *tabComment, nData int) {
 			netral = netral + 1
 		}
 	}
+	// 	Berupa tabel untuk mennampilkan statistik sentimen
 	fmt.Println()
 	fmt.Println("Memuat Hasil..... > ")
 	fmt.Println()
@@ -426,7 +439,7 @@ func statistikSentimen(A *tabComment, nData int) {
 
 }
 
-//fungsi ini buat tampilan aplikasinya
+//ini buat nampilin menu utama dari program. user hanya perlu memillih menu yang diinginkan
 func tampilanMenu(pilihan int) {
 	for pilihan != 8 {
 		fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -434,19 +447,20 @@ func tampilanMenu(pilihan int) {
 		fmt.Println("===================================================")
 		fmt.Println("||		     MENU	              	 ||")
 		fmt.Println("===================================================")
-		fmt.Println("1. Tambah Komentar                                |")
-		fmt.Println("2. Ubah Komentar                                  |")
-		fmt.Println("3. Hapus Komentar                                 |")
-		fmt.Println("4. Analisis Sentimen Komentar                     |")
-		fmt.Println("5. Cari Komentar                                  |")
-		fmt.Println("6. Urutkan Komentar (Panjang / Sentimen)          |")
-		fmt.Println("7. Statistik Sentimen                             |")
+		fmt.Println("1. Tambah Komentar 📑                             |")
+		fmt.Println("2. Ubah Komentar   📝                             |")
+		fmt.Println("3. Hapus Komentar  ✘                              |")
+		fmt.Println("4. Analisis Sentimen Komentar ╰┈➤                 |")
+		fmt.Println("5. Cari Komentar    ⌕                             |")
+		fmt.Println("6. Urutkan Komentar (Panjang / Sentimen) 🗂️        |")
+		fmt.Println("7. Statistik Sentimen 📊                          |")
 		fmt.Println("--------------------------------------------------|")
 		fmt.Println("8. Keluar                                         |")
 		fmt.Println("==================================================|")
 		fmt.Println()
 		fmt.Println("Pilih Fitur : ")
 		fmt.Scan(&pilihan)
+		// Switch case untuk user memilih menu utama, dari 1 - 8. Jika selain itu ndabisa ato fitur tidak tersedia ges
 		switch pilihan {
 		case 1:
 			inputComment(&tab, &nData)
@@ -463,6 +477,7 @@ func tampilanMenu(pilihan int) {
 		case 7:
 			statistikSentimen(&tab, nData)
 		case 8:
+			fmt.Println()
 			fmt.Println("==========================================================")
 			fmt.Println("||            TERIMA KASIH TELAH MENGGUNAKAN            ||")
 			fmt.Println("||         APLIKASI ANALISIS SENTIMEN KOMENTAR          ||")
@@ -470,27 +485,29 @@ func tampilanMenu(pilihan int) {
 			fmt.Println("Semoga harimu menyenangkan 😊")
 			fmt.Println("Sampai jumpa dan tetap semangat ngoding! 💻🔥")
 			fmt.Println("----------------------------------------------------------")
+			fmt.Println()
 		}
-		if pilihan < 0 || pilihan > 8 {
+		if pilihan <=	 0 || pilihan > 8 {
 			fmt.Println("Fitur tidak tersedia, silakan pilih fitur kembali!")
 		}
 	}
 
 }
+
+// fungsi ini untuk memproses menu dan greating awal
 func main() {
 	var pilihan int = 0
 	fmt.Println()
-
-	fmt.Println("====================================================================")
-	fmt.Println("||          SELAMAT DATANG DI APLIKASI ANALISIS KOMENTAR          ||")
-	fmt.Println("====================================================================")
-	fmt.Println("alo gengs! 👋                                                      |")
-	fmt.Println("kamu bisa analisis komentar sosial media kamu secara otomatis!     |")
-	fmt.Println("Kamu bisa menambahkan, mencari, mengubah, menghapus, hingga        |")
-	fmt.Println("mengurutkan dan melihat statistik sentimen dari komentar.          |")
-	fmt.Println("-------------------------------------------------------------------|")
-	fmt.Println("Silakan pilih fitur yang kamu inginkan dari menu di bawah ini yaa! |")
-	fmt.Println("====================================================================")
+	fmt.Println("=========================================================================")
+	fmt.Println("||        🌐  SELAMAT DATANG DI APLIKASI ANALISIS KOMENTAR 📱          ||")
+	fmt.Println("=========================================================================")
+	fmt.Println("alo gengs! 👋                                                           |")
+	fmt.Println("pada aplikasi ini, kamu bisa analisis komentar sosial media kamu secara |")
+	fmt.Println("otomatis! Kamu bisa menambahkan, mencari, mengubah, menghapus, hingga   |")
+	fmt.Println("mengurutkan dan melihat statistik sentimen dari komentar.               |")
+	fmt.Println("------------------------------------------------------------------------|")
+	fmt.Println("Silakan pilih fitur yang kamu inginkan dari menu di bawah ini yaa!      |")
+	fmt.Println("=========================================================================")
 	fmt.Println()
 	fmt.Println("Memuat Menu..... > ")
 	fmt.Println()
