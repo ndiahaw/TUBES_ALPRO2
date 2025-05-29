@@ -12,14 +12,16 @@ type tabComment [NMAX]comment
 
 var komentarPositif = []string{"bagus", "indah", "cantik", "ganteng", "modern", "keren", "anjay", "wow", "ramah",
 	"enak", "elegan", "hebat", "luar_biasa", "bagus_banget", "kreatif", "cerdas", "mantap", "asyik", "nyaman",
-	"terbaik", "cepat", "halus", "jernih", "top", "bersih", "segar", "inspiratif", "luwes", "menarik", "rekomended",
+	"terbaik", "cepat", "halus", "jernih", "top", "bersih", "segar", "inspiratif", "luwes", "menarik", "recomended",
 	"cerah", "positif", "aman", "tenang", "wangi", "modis", "menawan", "rapi", "teratur", "efisien", "hemat",
 	"berbakat", "jujur", "adil", "ceria", "mewah", "seru", "unik", "luar_biasa", "wah"}
-var komentarNegatif = []string{"bagus", "indah", "cantik", "ganteng", "modern", "keren", "anjay", "wow", "ramah",
-	"enak", "elegan", "hebat", "luar_biasa", "elegan", "hebat", "luar_biasa", "bagus_banget", "kreatif", "cerdas",
-	"mantap", "asyik", "nyaman", "terbaik", "cepat", "halus", "jernih", "top", "bersih", "segar", "inspiratif",
-	"luwes", "menarik", "rekomended", "cerah", "positif", "aman", "tenang", "wangi", "modis", "menawan", "rapi",
-	"teratur", "efisien", "hemat", "berbakat", "jujur", "adil", "ceria", "mewah", "seru", "unik", "luar_biasa", "wah"}
+
+var komentarNegatif = []string{"pickme", "busuk", "bosen", "jelek", "buruk", "menyebalkan", "benci", "burik", "gajelas",
+	"anjir", "gila", "kurang", "najis", "murahan", "lelet", "lemot", "menyedihkan", "malesin", "bau", "kusut", "salah",
+	"sakit", "horor", "gelap", "semrawut", "ribet", "tidak_enak", "tidak_nyaman", "tidak_sopan", "tidak_ramah", "bising",
+	"berantakan", "kacau", "merugikan", "capek", "lelah", "sia sia", "menakutkan", "payah", "males", "anjir", "kotor",
+	"membosankan", "tidak_aman", "aneh", "ngeblur", "nangis", "nggak_jelas", "hancur", "rusak", "murka", "frustasi", "marah"}
+
 var tab tabComment
 var IDKomen int
 var nData int = 1
@@ -90,7 +92,7 @@ func ubahKomentar(A *tabComment, nData int) {
 	fmt.Println("=======================================================")
 	fmt.Println("||		    UBAH KOMENTAR                    ||")
 	fmt.Println("=======================================================")
-	fmt.Println("Index komentar yang telah terisi :(", nData-1, "komentar )      |")
+	fmt.Println("Index komentar yang telah terisi :(", nData-1, "komentar )     |")
 	fmt.Println("-------------------------------------------------------")
 	fmt.Println("0. Back                                               |")
 	fmt.Println("=======================================================")
@@ -442,17 +444,17 @@ func statistikSentimen(A *tabComment, nData int) {
 //ini buat nampilin menu utama dari program. user hanya perlu memillih menu yang diinginkan
 func tampilanMenu(pilihan int) {
 	for pilihan != 8 {
-		fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+		fmt.Println("𓆝 𓆟 𓆞 𓆝 𓆟 𓆝 𓆟 𓆞 𓆝 𓆟 𓆝 𓆟 𓆞 𓆝 𓆟 𓆝 𓆟 𓆞 𓆝 𓆟 𓆝 𓆟 𓆞 𓆝 𓆟 𓆝 𓆟 𓆞 𓆝 𓆟")
 		fmt.Println()
 		fmt.Println("===================================================")
-		fmt.Println("||		     MENU	              	 ||")
+		fmt.Println("||		       MENU             	 ||")
 		fmt.Println("===================================================")
 		fmt.Println("1. Tambah Komentar 📑                             |")
 		fmt.Println("2. Ubah Komentar   📝                             |")
 		fmt.Println("3. Hapus Komentar  ✘                              |")
 		fmt.Println("4. Analisis Sentimen Komentar ╰┈➤                 |")
 		fmt.Println("5. Cari Komentar    ⌕                             |")
-		fmt.Println("6. Urutkan Komentar (Panjang / Sentimen) 🗂️        |")
+		fmt.Println("6. Urutkan Komentar (Panjang / Sentimen) 🗂️       |")
 		fmt.Println("7. Statistik Sentimen 📊                          |")
 		fmt.Println("--------------------------------------------------|")
 		fmt.Println("8. Keluar                                         |")
@@ -487,7 +489,7 @@ func tampilanMenu(pilihan int) {
 			fmt.Println("----------------------------------------------------------")
 			fmt.Println()
 		}
-		if pilihan <=	 0 || pilihan > 8 {
+		if pilihan <= 0 || pilihan > 8 {
 			fmt.Println("Fitur tidak tersedia, silakan pilih fitur kembali!")
 		}
 	}
